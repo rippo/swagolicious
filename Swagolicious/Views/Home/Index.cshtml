@@ -1,0 +1,81 @@
+﻿<h1>Test</h1>
+
+<div id="list">
+    <ul data-bind="foreach: { data: members}">
+        <li>
+            <img data-bind="attr: { src: Photo}" style="width: 69px;height: 78px;" />
+            <span data-bind="text: $index"></span>
+            <span data-bind="text: Name"></span>
+            <span data-bind="text: MemberId"></span>
+            <span data-bind="text: SwagCompany"></span>
+            <span data-bind="text: SwagThing"></span>
+        </li>
+    </ul>
+
+    <button data-bind="click: getNextWinner">Swag</button>
+
+    @Html.ActionLink("Reset and shuffle", "Reset")
+    
+    <div id="winner">
+        <h2 data-bind="text: name"></h2>
+    </div>
+
+</div>
+
+
+
+@section scripts
+{
+    <script>
+        $(function() {
+
+            function memberViewodel(data) {
+                this.Id = data.MemberId;
+                this.MemberId = ko.observable(data.MemberId);
+                this.Name = ko.observable(data.Name);
+                this.SwagCompany = ko.observable("");
+                this.SwagThing = ko.observable("");
+                this.Photo = ko.observable(data.Photo);
+            }
+
+            function winnerViewModel() {
+                this.name = ko.observable("sas");
+            }
+
+            $.getJSON("/home/memberlist")
+                .then(function (rawData) {
+                    return ko.utils.arrayMap(rawData, function(instanceData) {
+                        return new memberViewodel(instanceData);
+                    });
+                })
+                .done(function (mappedData) {
+                    doit(mappedData);
+            });
+
+            function doit(mappedData) {
+                ko.applyBindings({
+                    members: ko.observableArray(mappedData),
+                    getNextWinner: function () {
+                        var members = this.members();
+                        $.getJSON("/home/nextwinner")
+                            .then(function (rawData) {
+                                var winner = ko.utils.arrayFirst(members, function (member) {
+                                    return member.Id === rawData.Winner.MemberId;
+                                });
+                                winner.SwagThing(rawData.WonSwag.Thing);
+                                winner.SwagCompany(rawData.WonSwag.Company);
+                                console.log(rawData.Winner.Name);
+                                //WinnerViewModel.Name("sds");
+                                //console.log(WinnerViewModel.Name());
+                            });
+                    }
+                }, $("#list")[0]);
+
+            }
+
+        });
+    </script>
+}
+
+
+

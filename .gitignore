@@ -1,0 +1,9 @@
+bin
+Bin
+obj
+Obj
+output
+Output
+*.user
+*.suo
+packages/
