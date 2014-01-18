@@ -1,0 +1,10 @@
+﻿.member img {
+    text-align: center;
+    width: 69px;
+    height: 78px;
+}
+
+.list-inline > li {
+    margin-right: 25px;
+    width: 125px;
+}

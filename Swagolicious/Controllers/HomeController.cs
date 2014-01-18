@@ -30,7 +30,7 @@ namespace Swagolicious.Controllers
 
         public JsonResult MemberList()
         {
-            var list = MemberListForSwag.MemberList.OrderBy(w=>w.Name);
+            var list = MemberListForSwag.MemberList.OrderBy(w => w.Name);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
