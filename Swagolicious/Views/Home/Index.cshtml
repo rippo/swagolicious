@@ -1,7 +1,7 @@
 ﻿<h1>Test</h1>
 
 <div id="list">
-    <ul data-bind="foreach: { data: members}">
+    <ul data-bind="foreach: { data: Members}">
         <li>
             <img data-bind="attr: { src: Photo}" style="width: 69px;height: 78px;" />
             <span data-bind="text: $index"></span>
@@ -12,12 +12,13 @@
         </li>
     </ul>
 
-    <button data-bind="click: getNextWinner">Swag</button>
+    <button data-bind="click: GetNextWinner">Swag</button>
 
     @Html.ActionLink("Reset and shuffle", "Reset")
-    
+
     <div id="winner">
-        <h2 data-bind="text: name"></h2>
+        <span data-bind="text: Winner">Hit the swag button</span>
+        <span data-bind="text: WinnerSwagThing"></span>
     </div>
 
 </div>
@@ -27,55 +28,56 @@
 @section scripts
 {
     <script>
-        $(function() {
+        var memberViewModel = function memberViewModel(data) {
+            var self = this;
+            self.Id = data.MemberId;
+            self.MemberId = ko.observable(data.MemberId);
+            self.Name = ko.observable(data.Name);
+            self.Photo = ko.observable(data.Photo);
+            self.SwagCompany = ko.observable(data.SwagCompany);
+            self.SwagThing = ko.observable(data.SwagThing);
+        };
 
-            function memberViewodel(data) {
-                this.Id = data.MemberId;
-                this.MemberId = ko.observable(data.MemberId);
-                this.Name = ko.observable(data.Name);
-                this.SwagCompany = ko.observable("");
-                this.SwagThing = ko.observable("");
-                this.Photo = ko.observable(data.Photo);
-            }
-
-            function winnerViewModel() {
-                this.name = ko.observable("sas");
-            }
-
-            $.getJSON("/home/memberlist")
-                .then(function (rawData) {
-                    return ko.utils.arrayMap(rawData, function(instanceData) {
-                        return new memberViewodel(instanceData);
-                    });
-                })
-                .done(function (mappedData) {
-                    doit(mappedData);
+        $.getJSON("/home/memberlist")
+            .then(function (rawData) {
+                return ko.utils.arrayMap(rawData, function (instanceData) {
+                    return new memberViewModel(instanceData);
+                });
+            })
+            .done(function (mappedData) {
+                applyBindings(mappedData);
             });
 
-            function doit(mappedData) {
-                ko.applyBindings({
-                    members: ko.observableArray(mappedData),
-                    getNextWinner: function () {
-                        var members = this.members();
-                        $.getJSON("/home/nextwinner")
-                            .then(function (rawData) {
-                                var winner = ko.utils.arrayFirst(members, function (member) {
-                                    return member.Id === rawData.Winner.MemberId;
-                                });
-                                winner.SwagThing(rawData.WonSwag.Thing);
-                                winner.SwagCompany(rawData.WonSwag.Company);
-                                console.log(rawData.Winner.Name);
-                                //WinnerViewModel.Name("sds");
-                                //console.log(WinnerViewModel.Name());
-                            });
-                    }
-                }, $("#list")[0]);
+        function applyBindings(data) {
+            var masterViewModel = function () {
+                var self = this;
+                self.Members = ko.observableArray(data);
 
-            }
+                self.Winner = ko.observable("Hit the swag button..");
+                self.WinnerSwagThing = ko.observable();
 
-        });
+                self.GetNextWinner = function () {
+                    loadNextWinner(self);
+                };
+            };
+            
+            ko.applyBindings(new masterViewModel());
+        }
+
+        function loadNextWinner(model) {
+            $.getJSON("/home/nextwinner")
+            .then(function (rawData) {
+                var nextWinner = ko.utils.arrayFirst(model.Members(), function (member) {
+                    return member.Id === rawData.Winner.MemberId;
+                });
+                nextWinner.SwagThing(rawData.WonSwag.Thing);
+
+                model.Winner(rawData.Winner.Name);
+                model.WinnerSwagThing(rawData.WonSwag.Thing);
+            });
+        }
     </script>
-}
 
+}
 
 
