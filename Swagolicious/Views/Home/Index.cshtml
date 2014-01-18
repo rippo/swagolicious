@@ -1,6 +1,29 @@
 ﻿<h1>Swagger</h1>
 
 <div id="list" class="row">
+    
+    <div id="winner" class="col-md-2">
+        @Html.ActionLink("Reset", "Reset")
+
+        <button data-bind="click: GetNextWinner">Swag</button>
+
+        <div id="winnercontainer" style="display: none;">
+            <div class="panel panel-info" data-bind="visible: WinnerShown">
+                <div class="panel-heading"><span data-bind="text: Winner"></span></div>
+                <div class="panel-body">
+                    <img data-bind="attr: { src: WinnerPhoto}" style="width: 69px;height: 78px;" />
+                    <span data-bind="text: WinnerSwagThing"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flipbox-container">
+            <div class="flipbox">
+            </div>
+        </div>
+
+    </div>
+
 
     <div class="col-md-10">
 
@@ -9,7 +32,6 @@
                 <div data-bind="css: ApplyPanelClass" class=" row text-center panel member">
                     <div class="panel-heading"><span data-bind="text: Name"></span></div>
                     <div class="panel-body">
-                        <span data-bind="text: SwagCompany"></span>
                         <span data-bind="text: SwagThing"></span>
                     </div>
                 </div>
@@ -18,20 +40,6 @@
 
     </div>
 
-    <div id="winner" class="col-md-2">
-        @Html.ActionLink("Reset", "Reset")
-
-        <button data-bind="click: GetNextWinner">Swag</button>
-        
-        <div class="panel panel-info" data-bind="visible: WinnerShown">
-            <div class="panel-heading"><span data-bind="text: Winner"></span></div>
-            <div class="panel-body">
-                <img data-bind="attr: { src: WinnerPhoto}" style="width: 69px;height: 78px;" />
-                <span data-bind="text: WinnerSwagCompany"></span>
-                <span data-bind="text: WinnerSwagThing"></span>
-            </div>
-        </div>
-    </div>
 
 </div>
 
@@ -45,36 +53,33 @@
             self.MemberId = ko.observable(data.MemberId);
             self.Name = ko.observable(data.Name);
             self.Photo = ko.observable(data.Photo);
-            self.SwagCompany = ko.observable(data.SwagCompany);
             self.SwagThing = ko.observable(data.SwagThing);
             self.WonSwag = ko.observable(false);
-            self.ApplyPanelClass = ko.computed(function () {
+            self.ApplyPanelClass = ko.computed(function() {
                 return self.WonSwag() ? "panel-primary" : "panel-warning";
             });
         };
 
         $.getJSON("/home/memberlist")
-            .then(function (rawData) {
-                return ko.utils.arrayMap(rawData, function (instanceData) {
+            .then(function(rawData) {
+                return ko.utils.arrayMap(rawData, function(instanceData) {
                     return new memberViewModel(instanceData);
                 });
             })
-            .done(function (mappedData) {
+            .done(function(mappedData) {
                 applyBindings(mappedData);
             });
 
         function applyBindings(data) {
-            var masterViewModel = function () {
+            var masterViewModel = function() {
                 var self = this;
                 self.Members = ko.observableArray(data);
-
-                self.Winner = ko.observable("Hit the swag button..");
+                self.Winner = ko.observable();
                 self.WinnerSwagThing = ko.observable();
-                self.WinnerSwagCompany = ko.observable();
                 self.WinnerPhoto = ko.observable();
                 self.WinnerShown = ko.observable(false);
 
-                self.GetNextWinner = function () {
+                self.GetNextWinner = function() {
                     loadNextWinner(self);
                 };
             };
@@ -83,9 +88,10 @@
         }
 
         function loadNextWinner(model) {
+
             $.getJSON("/home/nextwinner")
-                .then(function (rawData) {
-                    var nextWinner = ko.utils.arrayFirst(model.Members(), function (member) {
+                .then(function(rawData) {
+                    var nextWinner = ko.utils.arrayFirst(model.Members(), function(member) {
                         return member.Id === rawData.Winner.MemberId;
                     });
                     nextWinner.SwagThing(rawData.WonSwag.Thing);
@@ -94,8 +100,14 @@
                     model.WinnerShown(true);
                     model.Winner(rawData.Winner.Name);
                     model.WinnerSwagThing(rawData.WonSwag.Thing);
-                    model.WinnerSwagCompany(rawData.WonSwag.Company);
                     model.WinnerPhoto(rawData.Winner.Photo);
+
+                    $(".flipbox").flippy({
+                        //color_target: "red",
+                        duration: "1000",
+                        verso: $('#winnercontainer').html()
+                    });
+
                 });
         }
     </script>

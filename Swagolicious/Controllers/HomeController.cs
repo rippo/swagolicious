@@ -42,7 +42,7 @@ namespace Swagolicious.Controllers
 
             var swag = MemberListForSwag.Swag.FirstOrDefault(w => !w.Claimed);
             if (swag == null)
-                swag = new Swag { Company = "Smart Devs", Thing = "You choose" };
+                swag = new Swag { Thing = "You choose" };
 
             var model = new NextWinnerViewModel
             {
@@ -85,9 +85,9 @@ namespace Swagolicious.Controllers
     {
         public string Name { get; set; }
         public string Photo { get; set; }
-
         public bool WonSwag { get; set; }
         public int MemberId { get; set; }
+        public string SwagThing { get; set; }
     }
 
     public class Swag
@@ -98,7 +98,6 @@ namespace Swagolicious.Controllers
         }
 
         public Guid Id { get; private set; }
-        public string Company { get; set; }
         public string Thing { get; set; }
         public bool Claimed { get; set; }
     }

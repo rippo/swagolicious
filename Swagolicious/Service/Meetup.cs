@@ -43,15 +43,16 @@ namespace Swagolicious.Service
                             Photo = result.MemberPhoto != null ?
                                 result.MemberPhoto.PhotoLink : "http://img2.meetupstatic.com/2982428616572973604/img/noPhoto_80.gif",
                             WonSwag = false,
+                            SwagThing = "??",
                             MemberId = result.Member.MemberId
                         });
                 }
                 MemberListForSwag.MemberList.Shuffle();
 
                 //swag
-                MemberListForSwag.Swag.Add(new Swag { Thing = "TShirt1", Company = "Red-Gate1", Claimed = false });
-                MemberListForSwag.Swag.Add(new Swag { Thing = "TShirt2", Company = "Red-Gate2", Claimed = false });
-                MemberListForSwag.Swag.Add(new Swag { Thing = "TShirt3", Company = "Red-Gate3", Claimed = false });
+                MemberListForSwag.Swag.Add(new Swag { Thing = "TShirt1", Claimed = false });
+                MemberListForSwag.Swag.Add(new Swag { Thing = "TShirt2", Claimed = false });
+                MemberListForSwag.Swag.Add(new Swag { Thing = "TShirt3", Claimed = false });
                 
                 MemberListForSwag.Swag.Shuffle();
 
