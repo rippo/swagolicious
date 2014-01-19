@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -28,7 +27,7 @@ namespace Swagolicious.Service
                 request.AddUrlSegment("eventid", events.Results.First().Id);
                 var rsvpList = api.Execute<RsvpDto>(request);
 
-                //exclude coords
+                //exclude coordinators
                 var results = rsvpList.Results
                     .Where(w => !Settings.AttendeesExcludeList.Contains(w.Member.Name))
                     .ToList();
@@ -60,6 +59,12 @@ namespace Swagolicious.Service
             });
         }
 
+        public void Reload()
+        {
+            new InMemoryCache().Remove("Meetup.Attendees");
+            LoadFromMeetup();
+        }
+
         //private void LoadFromFile(string swagLocation)
         //{
         //    var swagPath = GetFileLocation(swagLocation);
@@ -84,10 +89,10 @@ namespace Swagolicious.Service
         //    }
         //}
 
-        private bool IsFileEmpty(string swaglocation)
-        {
-            return File.ReadAllLines(swaglocation).Length == 0;
-        }
+        //private bool IsFileEmpty(string swaglocation)
+        //{
+        //    return File.ReadAllLines(swaglocation).Length == 0;
+        //}
 
 
 
@@ -105,11 +110,17 @@ namespace Swagolicious.Service
             }
             return item;
         }
+
+        public void Remove(string cacheId)
+        {
+            HttpContext.Current.Cache.Remove(cacheId);
+        }
     }
 
     interface ICacheService
     {
         T Get<T>(string cacheId, Func<T> getItemCallback) where T : class;
+        void Remove(string cacheId);
     }
 
     public static class ThreadSafeRandom

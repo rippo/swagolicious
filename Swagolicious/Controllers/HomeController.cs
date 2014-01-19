@@ -28,6 +28,12 @@ namespace Swagolicious.Controllers
             return RedirectToAction("Index");
         }
 
+        public RedirectToRouteResult Reload()
+        {
+            meetup.Reload();
+            return RedirectToAction("Index");
+        }
+
         public JsonResult MemberList()
         {
             var list = MemberListForSwag.MemberList.Where(w => !w.Excluded).OrderBy(w => w.Name);
@@ -81,6 +87,7 @@ namespace Swagolicious.Controllers
             {
                 item.WonSwag = false;
                 item.Excluded = false;
+                item.SwagThing = "??";
             }
             foreach (var swag in Swag)
             {
