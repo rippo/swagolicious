@@ -7,3 +7,4 @@ Output
 *.user
 *.suo
 packages/
+Deploy/
