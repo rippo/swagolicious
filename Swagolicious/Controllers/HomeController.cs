@@ -57,6 +57,7 @@ namespace Swagolicious.Controllers
                 Winner = winner,
                 WonSwag = swag
             };
+            winner.SwagThing = swag.Thing;
             winner.WonSwag = true;
             swag.Claimed = true;
             return Json(model, JsonRequestBehavior.AllowGet);

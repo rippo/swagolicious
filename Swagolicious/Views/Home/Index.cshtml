@@ -1,23 +1,21 @@
-﻿<h1>Swagger</h1>
-
-<div id="list" class="row">
+﻿<div id="list" class="row">
 
     <div id="winner" class="col-md-2">
         @Html.ActionLink("Reset", "Reset", null, new { @class = "btn btn-danger" })
-        
         <button class="btn btn-primary" data-bind="click: GetNextWinner">Swag</button>
+        
 
         <div id="winnercontainer" style="display: none;">
-            <div class="panel panel-info" data-bind="visible: WinnerShown">
+            <div class="panel panel-danger" data-bind="visible: WinnerShown">
                 <div class="panel-heading"><span data-bind="text: Winner"></span></div>
                 <div class="panel-body">
-                    <img data-bind="attr: { src: WinnerPhoto}" style="width: 69px;height: 78px;" />
+                    <img data-bind="attr: { src: WinnerPhoto}" style="width: 100%;" />
                     <span data-bind="text: WinnerSwagThing"></span>
                 </div>
             </div>
         </div>
-
-        <div class="flipbox-container">
+        
+        <div class="flipbox-container top-buffer">
             <div class="flipbox">
             </div>
         </div>

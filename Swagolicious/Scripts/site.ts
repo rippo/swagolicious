@@ -47,18 +47,20 @@ module Swagolicious {
                                 nextWinner.SwagThing(rawData.WonSwag.Thing);
                             }
                         });
-                    };
-                });
+                    };;
+            });
         }
 
         private MemberViewModel = function (data) {
+            if (data.WonSwag)
+                console.log("won")
             this.Id = data.MemberId;
             this.MemberId = ko.observable(data.MemberId);
             this.Name = ko.observable(data.Name);
             this.Photo = ko.observable(data.Photo);
             this.SwagThing = ko.observable(data.SwagThing);
             this.WonSwag = ko.observable(false);
-            this.ApplyPanelClass = ko.computed(() => this.WonSwag() ? "panel-primary" : "panel-warning");
+            this.ApplyPanelClass = ko.computed(() => data.WonSwag || this.WonSwag() ? "panel-primary" : "panel-warning");
         };
 
         private MasterViewModel = function (data, self) {

@@ -4,6 +4,8 @@ var Swagolicious;
         function Site() {
             this.MemberViewModel = function (data) {
                 var _this = this;
+                if (data.WonSwag)
+                    console.log("won");
                 this.Id = data.MemberId;
                 this.MemberId = ko.observable(data.MemberId);
                 this.Name = ko.observable(data.Name);
@@ -11,7 +13,7 @@ var Swagolicious;
                 this.SwagThing = ko.observable(data.SwagThing);
                 this.WonSwag = ko.observable(false);
                 this.ApplyPanelClass = ko.computed(function () {
-                    return _this.WonSwag() ? "panel-primary" : "panel-warning";
+                    return data.WonSwag || _this.WonSwag() ? "panel-primary" : "panel-warning";
                 });
             };
             this.MasterViewModel = function (data, self) {
@@ -79,6 +81,7 @@ var Swagolicious;
                         }
                     });
                 }
+                ;
                 ;
             });
         };
