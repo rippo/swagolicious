@@ -20,6 +20,7 @@ module Swagolicious {
         }
 
         private ApplyBindings(data) {
+            console.log("Applybindings");
             var self = this;
             ko.applyBindings(new self.MasterViewModel(data, self));
         }
@@ -29,7 +30,7 @@ module Swagolicious {
             $.getJSON("/home/nextwinner")
                 .then(rawData=> {
                     if (rawData.MemberId == 0) {
-                        alert("done");
+                        $('#myModal').modal();
                     } else {
                         var nextWinner = ko.utils.arrayFirst(model.Members(), member=> member.Id === rawData.Winner.MemberId);
 

@@ -51,6 +51,7 @@ var Swagolicious;
         };
 
         Site.prototype.ApplyBindings = function (data) {
+            console.log("Applybindings");
             var self = this;
             ko.applyBindings(new self.MasterViewModel(data, self));
         };
@@ -58,7 +59,7 @@ var Swagolicious;
         Site.prototype.LoadNextWinner = function (model) {
             $.getJSON("/home/nextwinner").then(function (rawData) {
                 if (rawData.MemberId == 0) {
-                    alert("done");
+                    $('#myModal').modal();
                 } else {
                     var nextWinner = ko.utils.arrayFirst(model.Members(), function (member) {
                         return member.Id === rawData.Winner.MemberId;
