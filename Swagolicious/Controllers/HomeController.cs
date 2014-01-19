@@ -30,15 +30,23 @@ namespace Swagolicious.Controllers
 
         public JsonResult MemberList()
         {
-            var list = MemberListForSwag.MemberList.OrderBy(w => w.Name);
+            var list = MemberListForSwag.MemberList.Where(w => !w.Excluded).OrderBy(w => w.Name);
             return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        public EmptyResult RemoveMemberFromGettingSwag(long id)
+        {
+            var excludee = MemberListForSwag.MemberList.FirstOrDefault(w => w.MemberId == id);
+            if (excludee != null)
+                excludee.Excluded = true;
+            return new EmptyResult();
         }
 
         public JsonResult NextWinner()
         {
-            var winner = MemberListForSwag.MemberList.FirstOrDefault(w => !w.WonSwag);
-            //if (winner == null)
-            //    return PartialView("Finished");
+            var winner = MemberListForSwag.MemberList.FirstOrDefault(w => !w.WonSwag && !w.Excluded);
+            if (winner == null)
+                return Json(new { MemberId = 0 }, JsonRequestBehavior.AllowGet);
 
             var swag = MemberListForSwag.Swag.FirstOrDefault(w => !w.Claimed);
             if (swag == null)
@@ -71,6 +79,7 @@ namespace Swagolicious.Controllers
             foreach (var item in MemberList)
             {
                 item.WonSwag = false;
+                item.Excluded = false;
             }
             foreach (var swag in Swag)
             {
@@ -88,6 +97,7 @@ namespace Swagolicious.Controllers
         public bool WonSwag { get; set; }
         public int MemberId { get; set; }
         public string SwagThing { get; set; }
+        public bool Excluded { get; set; }
     }
 
     public class Swag
