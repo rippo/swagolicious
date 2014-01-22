@@ -35,10 +35,15 @@ namespace Swagolicious.Service
                 //lets fill the attendee and swag lists
                 foreach (var result in results)
                 {
+                    var nameParts = result.Member.Name.Split(' ');
+                    var name = nameParts[0];
+                    if (nameParts.Length > 1)
+                        name += " " + nameParts[nameParts.Length - 1].Substring(0, 1);
+
                     MemberListForSwag.MemberList.Add(
                         new MemberForSwag
                         {
-                            Name = result.Member.Name,
+                            Name = name,
                             Photo = result.MemberPhoto != null ?
                                 result.MemberPhoto.PhotoLink : "http://img2.meetupstatic.com/2982428616572973604/img/noPhoto_80.gif",
                             WonSwag = false,
