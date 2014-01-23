@@ -121,9 +121,13 @@
     <Compile Include="Models\dto\EventDto.cs" />
     <Compile Include="Models\dto\EventItemDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\ICacheService.cs" />
+    <Compile Include="Service\InMemoryCache.cs" />
     <Compile Include="Service\MeetUpApiCall.cs" />
     <Compile Include="Service\Meetup.cs" />
+    <Compile Include="Service\MyExtensions.cs" />
     <Compile Include="Service\Settings.cs" />
+    <Compile Include="Service\ThreadSafeRandom.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -133,6 +137,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\flapper.css" />
     <Content Include="Content\logo.jpeg" />
     <Content Include="Content\Site.css">
       <DependentUpon>Site.less</DependentUpon>
@@ -152,7 +157,9 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
+    <Content Include="Scripts\jquery.flapper.js" />
     <Content Include="Scripts\jquery.flippy.js" />
+    <Content Include="Scripts\jquery.transform.js" />
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="Scripts\knockout-3.0.0.js" />
     <Content Include="Scripts\site.js" />

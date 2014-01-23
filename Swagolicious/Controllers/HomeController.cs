@@ -106,6 +106,13 @@ namespace Swagolicious.Controllers
         public int MemberId { get; set; }
         public string SwagThing { get; set; }
         public bool Excluded { get; set; }
+        public string PaddedName
+        {
+            get
+            {
+                return Name.PaddedNameForFlapper(12);
+            }
+        }
     }
 
     public class Swag
@@ -118,6 +125,11 @@ namespace Swagolicious.Controllers
         public Guid Id { get; private set; }
         public string Thing { get; set; }
         public bool Claimed { get; set; }
+        public string PaddedName
+        {
+            get { return Thing.PaddedNameForFlapper(12); }
+        }
+
     }
 
 }

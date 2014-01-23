@@ -3,3 +3,7 @@
 interface JQuery {
     flippy(options? : any): void;
 }
+
+interface JQuery {
+    flapper(options?: any): any;
+}

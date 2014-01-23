@@ -1,9 +1,12 @@
 ﻿<div id="list" class="row">
 
     <div id="winner" class="col-md-2">
+
+        <img class="center-block" style="width: 100%;" src="~/Content/logo.jpeg" />
+
         @Html.ActionLink("Reset", "Reset", null, new { @class = "btn btn-danger" })
         <button class="btn btn-primary" data-bind="click: GetNextWinner">Swag</button>
-        
+
 
         <div id="winnercontainer" style="display: none;">
             <div class="panel panel-danger" data-bind="visible: WinnerShown">
@@ -14,7 +17,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="flipbox-container top-buffer">
             <div class="flipbox">
             </div>
@@ -49,7 +52,11 @@
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/knockout-3.0.0.debug.js"></script>
     <script src="~/Scripts/jquery.flippy.js"></script>
+    <script src="~/Scripts/jquery.transform.js"></script>
+    <script src="~/Scripts/jquery.flapper.js"></script>
     <script src="~/Scripts/site.js"></script>
+
+
 }
 
 

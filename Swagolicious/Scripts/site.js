@@ -38,7 +38,20 @@ var Swagolicious;
             this.WireUp();
         }
         Site.prototype.WireUp = function () {
+            this.SetUpFlappy();
             this.LoadMembers();
+        };
+
+        Site.prototype.SetUpFlappy = function () {
+            var options = {
+                width: 12,
+                align: 'right',
+                chars_preset: 'alphanum',
+                timing: 500,
+                transform: true
+            };
+            $('#display1').flapper(options).val("SWAGOLICIOUS").change();
+            $('#display2').flapper(options).val(" SMART DEVS ").change();
         };
 
         Site.prototype.LoadMembers = function () {
@@ -59,6 +72,8 @@ var Swagolicious;
         };
 
         Site.prototype.LoadNextWinner = function (model) {
+            $('#display2').val("            ").change();
+
             $.getJSON("/home/nextwinner").then(function (rawData) {
                 if (rawData.MemberId == 0) {
                     $('#myModal').modal();
@@ -72,14 +87,19 @@ var Swagolicious;
                     model.WinnerSwagThing(rawData.WonSwag.Thing);
                     model.WinnerPhoto(rawData.Winner.Photo);
 
-                    $(".flipbox").flippy({
-                        duration: "600",
-                        verso: $('#winnercontainer').html(),
-                        onFinish: function () {
-                            nextWinner.WonSwag(true);
-                            nextWinner.SwagThing(rawData.WonSwag.Thing);
-                        }
-                    });
+                    $('#display1').val(rawData.Winner.PaddedName).change();
+                    $('#display2').val(rawData.WonSwag.PaddedName).change();
+
+                    setTimeout(function () {
+                        $(".flipbox").flippy({
+                            duration: "600",
+                            verso: $('#winnercontainer').html(),
+                            onFinish: function () {
+                                nextWinner.WonSwag(true);
+                                nextWinner.SwagThing(rawData.WonSwag.Thing);
+                            }
+                        });
+                    }, 2500);
                 }
                 ;
                 ;

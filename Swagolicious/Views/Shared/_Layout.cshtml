@@ -6,11 +6,17 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/flapper.css" rel="stylesheet" />
 </head>
 <body>
 
     <div class="container">
-        <img class="center-block" style="width: 50%;"  src="~/Content/logo.jpeg" />
+        <div class="row">
+            <div class="col-md-12">
+                <input id="display1" class="XL" />
+                <input id="display2" class="XL" />
+            </div>
+        </div>
         @RenderBody()
     </div>
 
