@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Swagolicious.Service
 {
-    static class MyExtensions
+    internal static class MyExtensions
     {
         public static void Shuffle<T>(this IList<T> list)
         {
@@ -16,6 +16,15 @@ namespace Swagolicious.Service
                 list[n] = value;
             }
         }
+
+        public static string TruncateWithEllipsis(this string value, int totalLength)
+        {
+            if (value == null) return "?";
+            if (value.Length < totalLength)
+                return value;
+            return value.Substring(0, totalLength - 1) + "...";
+        }
+
 
         public static string PaddedNameForFlapper(this string value, int totalLength)
         {

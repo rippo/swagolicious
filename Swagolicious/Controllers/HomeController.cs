@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Swagolicious.Models;
 using Swagolicious.Service;
@@ -63,73 +61,15 @@ namespace Swagolicious.Controllers
                 Winner = winner,
                 WonSwag = swag
             };
-            winner.SwagThing = swag.Thing;
+            winner.SwagThing = swag.Thing.TruncateWithEllipsis(12);
             winner.WonSwag = true;
             swag.Claimed = true;
             return Json(model, JsonRequestBehavior.AllowGet);
         }
-    }
 
-    public static class MemberListForSwag
-    {
-        static MemberListForSwag()
+        public ActionResult Test()
         {
-            MemberList = new List<MemberForSwag>();
-            Swag = new List<Swag>();
-        }
-
-        public static List<MemberForSwag> MemberList { get; set; }
-        public static List<Swag> Swag { get; set; }
-
-        public static void ResetWinnersAndReshuffle()
-        {
-            foreach (var item in MemberList)
-            {
-                item.WonSwag = false;
-                item.Excluded = false;
-                item.SwagThing = "??";
-            }
-            foreach (var swag in Swag)
-            {
-                swag.Claimed = false;
-            }
-            MemberList.Shuffle();
-            Swag.Shuffle();
+            return View("Test");
         }
     }
-
-    public class MemberForSwag
-    {
-        public string Name { get; set; }
-        public string Photo { get; set; }
-        public bool WonSwag { get; set; }
-        public int MemberId { get; set; }
-        public string SwagThing { get; set; }
-        public bool Excluded { get; set; }
-        public string PaddedName
-        {
-            get
-            {
-                return Name.PaddedNameForFlapper(12);
-            }
-        }
-    }
-
-    public class Swag
-    {
-        public Swag()
-        {
-            Id = Guid.NewGuid();
-        }
-
-        public Guid Id { get; private set; }
-        public string Thing { get; set; }
-        public bool Claimed { get; set; }
-        public string PaddedName
-        {
-            get { return Thing.PaddedNameForFlapper(12); }
-        }
-
-    }
-
 }

@@ -1,32 +1,14 @@
-﻿<div id="list" class="row">
-
-    <div id="winner" class="col-md-2">
-
-        <img class="center-block" style="width: 100%;" src="~/Content/logo.jpeg" />
-
+﻿<div class="row text-center">
+    <div class="col-md-12">
+        <input id="display1" class="XL" />
         @Html.ActionLink("Reset", "Reset", null, new { @class = "btn btn-danger" })
         <button class="btn btn-primary" data-bind="click: GetNextWinner">Swag</button>
-
-
-        <div id="winnercontainer" style="display: none;">
-            <div class="panel panel-danger" data-bind="visible: WinnerShown">
-                <div class="panel-heading"><span data-bind="text: Winner"></span></div>
-                <div class="panel-body">
-                    <img data-bind="attr: { src: WinnerPhoto}" style="width: 100%;" />
-                    <span data-bind="text: WinnerSwagThing"></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="flipbox-container top-buffer">
-            <div class="flipbox">
-            </div>
-        </div>
-
+        <input id="display2" class="XL" />
     </div>
+</div>
 
-
-    <div class="col-md-10">
+<div id="list" class="row text-center">
+    <div class="col-md-12">
 
         <ul class="list-inline" data-bind="foreach: { data: Members}">
             <li>
@@ -44,19 +26,18 @@
     </div>
 </div>
 
+@Html.Partial("Partials/Winner")
 @Html.Partial("Partials/AllSwaggedOut")
+
 
 @section scripts
 {
     <script src="~/Scripts/jquery-2.0.3.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/knockout-3.0.0.debug.js"></script>
-    <script src="~/Scripts/jquery.flippy.js"></script>
     <script src="~/Scripts/jquery.transform.js"></script>
     <script src="~/Scripts/jquery.flapper.js"></script>
     <script src="~/Scripts/site.js"></script>
-
-
 }
 
 

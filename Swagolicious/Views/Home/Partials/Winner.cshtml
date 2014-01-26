@@ -1,0 +1,19 @@
+﻿<!-- Modal -->
+<div class="modal fade text-center" id="modalNextWinner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel" data-bind="text: Winner"></h4>
+            </div>
+            <div class="modal-body">
+                <p><img data-bind="attr: { src: WinnerPhoto}" style="height: 300px" alt="" /></p>
+                <h2><span data-bind="text: WinnerSwagThing"></span></h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: GetNextWinner">Swag</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -4,8 +4,6 @@ var Swagolicious;
         function Site() {
             this.MemberViewModel = function (data) {
                 var _this = this;
-                if (data.WonSwag)
-                    console.log("won");
                 this.Id = data.MemberId;
                 this.MemberId = ko.observable(data.MemberId);
                 this.Name = ko.observable(data.Name);
@@ -91,15 +89,10 @@ var Swagolicious;
                     $('#display2').val(rawData.WonSwag.PaddedName).change();
 
                     setTimeout(function () {
-                        $(".flipbox").flippy({
-                            duration: "600",
-                            verso: $('#winnercontainer').html(),
-                            onFinish: function () {
-                                nextWinner.WonSwag(true);
-                                nextWinner.SwagThing(rawData.WonSwag.Thing);
-                            }
-                        });
-                    }, 2500);
+                        $('#modalNextWinner').modal();
+                        nextWinner.WonSwag(true);
+                        nextWinner.SwagThing(rawData.WonSwag.TruncatedName);
+                    }, 4000);
                 }
                 ;
                 ;

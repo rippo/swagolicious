@@ -40,7 +40,7 @@ namespace Swagolicious.Service
                             Photo = result.MemberPhoto != null ?
                                 result.MemberPhoto.PhotoLink : "http://img2.meetupstatic.com/2982428616572973604/img/noPhoto_80.gif",
                             WonSwag = false,
-                            SwagThing = "??",
+                            SwagThing = "?",
                             MemberId = result.Member.MemberId
                         });
                 }

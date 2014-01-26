@@ -113,6 +113,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\MemberListForSwag.cs" />
+    <Compile Include="Models\Swag.cs" />
+    <Compile Include="Models\MemberForSwag.cs" />
     <Compile Include="Models\NextWinnerViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -155,10 +158,10 @@
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery.flapper.callback.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery.flapper.js" />
-    <Content Include="Scripts\jquery.flippy.js" />
     <Content Include="Scripts\jquery.transform.js" />
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="Scripts\knockout-3.0.0.js" />
@@ -177,6 +180,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\site.js.map" />
     <Content Include="Views\Home\Partials\AllSwaggedOut.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Home\Partials\Winner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

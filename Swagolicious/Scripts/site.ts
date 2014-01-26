@@ -14,11 +14,11 @@ module Swagolicious {
 
         private SetUpFlappy() {
             var options = {
-                width: 12, // number of digits
-                align: 'right', // aligns values to the left or right of display
-                chars_preset: 'alphanum', // 'num', 'hexnum', 'alpha' or 'alphanum'
+                width: 12,
+                align: 'right', 
+                chars_preset: 'alphanum',
                 timing: 500,
-                transform: true // Flapper automatically detects the jquery.transform
+                transform: true
             };
             $('#display1').flapper(options).val("SWAGOLICIOUS").change();
             $('#display2').flapper(options).val(" SMART DEVS ").change();
@@ -56,23 +56,16 @@ module Swagolicious {
                         $('#display1').val(rawData.Winner.PaddedName).change();
                         $('#display2').val(rawData.WonSwag.PaddedName).change();
 
-                        setTimeout(function () {
-                            $(".flipbox").flippy({
-                                duration: "600",
-                                verso: $('#winnercontainer').html(),
-                                onFinish: () => {
-                                    nextWinner.WonSwag(true);
-                                    nextWinner.SwagThing(rawData.WonSwag.Thing);
-                                }
-                            });
-                        }, 2500);
+                        setTimeout(()=> {
+                            $('#modalNextWinner').modal();
+                            nextWinner.WonSwag(true);
+                            nextWinner.SwagThing(rawData.WonSwag.TruncatedName);
+                        }, 4000);
                     };;
                 });
         }
 
         private MemberViewModel = function (data) {
-            if (data.WonSwag)
-                console.log("won")
             this.Id = data.MemberId;
             this.MemberId = ko.observable(data.MemberId);
             this.Name = ko.observable(data.Name);
