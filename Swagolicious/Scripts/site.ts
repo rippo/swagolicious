@@ -15,7 +15,7 @@ module Swagolicious {
         private SetUpFlappy() {
             var options = {
                 width: 12,
-                align: 'right', 
+                align: 'right',
                 chars_preset: 'alphanum',
                 timing: 500,
                 transform: true
@@ -44,6 +44,8 @@ module Swagolicious {
             $.getJSON("/home/nextwinner")
                 .then(rawData=> {
                     if (rawData.MemberId == 0) {
+                        $('#display1').val("SWAGOLICIOUS").change();
+                        $('#display2').val(" SMART DEVS ").change();
                         $('#myModal').modal();
                     } else {
                         var nextWinner = ko.utils.arrayFirst(model.Members(), member=> member.Id === rawData.Winner.MemberId);
@@ -56,10 +58,12 @@ module Swagolicious {
                         $('#display1').val(rawData.Winner.PaddedName).change();
                         $('#display2').val(rawData.WonSwag.PaddedName).change();
 
-                        setTimeout(()=> {
+                        setTimeout(() => {
                             $('#modalNextWinner').modal();
-                            nextWinner.WonSwag(true);
-                            nextWinner.SwagThing(rawData.WonSwag.TruncatedName);
+                            setTimeout(() => {
+                                nextWinner.WonSwag(true);
+                                nextWinner.SwagThing(rawData.WonSwag.TruncatedName);
+                            }, 1000);
                         }, 4000);
                     };;
                 });

@@ -74,6 +74,8 @@ var Swagolicious;
 
             $.getJSON("/home/nextwinner").then(function (rawData) {
                 if (rawData.MemberId == 0) {
+                    $('#display1').val("SWAGOLICIOUS").change();
+                    $('#display2').val(" SMART DEVS ").change();
                     $('#myModal').modal();
                 } else {
                     var nextWinner = ko.utils.arrayFirst(model.Members(), function (member) {
@@ -90,8 +92,10 @@ var Swagolicious;
 
                     setTimeout(function () {
                         $('#modalNextWinner').modal();
-                        nextWinner.WonSwag(true);
-                        nextWinner.SwagThing(rawData.WonSwag.TruncatedName);
+                        setTimeout(function () {
+                            nextWinner.WonSwag(true);
+                            nextWinner.SwagThing(rawData.WonSwag.TruncatedName);
+                        }, 1000);
                     }, 4000);
                 }
                 ;
