@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using RestSharp;
-using Swagolicious.Controllers;
 using Swagolicious.Models;
 
 namespace Swagolicious.Service
