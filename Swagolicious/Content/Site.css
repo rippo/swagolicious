@@ -1,22 +1,21 @@
 ﻿.member img {
-    text-align: center;
-    width: 69px;
-    height: 78px;
+  text-align: center;
+  width: 69px;
+  height: 78px;
 }
-
 .list-inline > li {
-    margin-right: 25px;
-    width: 125px;
+  margin-right: 25px;
+  width: 125px;
 }
-
 #swagging {
-    text-align: center;
+  text-align: center;
 }
-
 body {
-    background-color: #1e1e1e;
+  background-color: #1e1e1e;
 }
-
 .top-buffer {
-    margin-top: 20px;
+  margin-top: 20px;
+}
+.white {
+  background-color: #FFF;
 }

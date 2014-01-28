@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SwagController.cs" />
     <Compile Include="Models\MemberListForSwag.cs" />
     <Compile Include="Models\Swag.cs" />
     <Compile Include="Models\MemberForSwag.cs" />
@@ -167,6 +168,7 @@
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="Scripts\knockout-3.0.0.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\swag.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -175,14 +177,13 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\_ViewStart.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\site.js.map" />
     <Content Include="Views\Home\Partials\AllSwaggedOut.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\Partials\Winner.cshtml" />
+    <Content Include="Views\Swag\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -192,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\site.ts" />
+    <TypeScriptCompile Include="Scripts\swag.ts" />
     <TypeScriptCompile Include="Scripts\typings\bootstrap\bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\ExternalLibs.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
