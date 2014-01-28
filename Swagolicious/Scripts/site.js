@@ -78,8 +78,8 @@ var Swagolicious;
                     $('#display2').val(" SMART DEVS ").change();
                     $('#myModal').modal();
                 } else {
-                    var nextWinner = ko.utils.arrayFirst(model.Members(), function (member) {
-                        return member.Id === rawData.Winner.MemberId;
+                    var nextWinner = ko.utils.arrayFirst(model.Members, function (item) {
+                        return item.Id === rawData.Winner.MemberId;
                     });
 
                     model.WinnerShown(true);

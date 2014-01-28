@@ -48,7 +48,7 @@ module Swagolicious {
                         $('#display2').val(" SMART DEVS ").change();
                         $('#myModal').modal();
                     } else {
-                        var nextWinner = ko.utils.arrayFirst(model.Members(), member=> member.Id === rawData.Winner.MemberId);
+                        var nextWinner = ko.utils.arrayFirst(model.Members, (item: any)=> item.Id === rawData.Winner.MemberId);
 
                         model.WinnerShown(true);
                         model.Winner(rawData.Winner.Name);

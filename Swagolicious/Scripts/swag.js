@@ -19,7 +19,7 @@ var Swagolicious;
                 };
 
                 self.save = function (form) {
-                    alert("Could now transmit to server: ");
+                    alert("Could now transmit to server: "); //+ ko.utils.stringifyJson(this.gifts));
                     // To actually transmit to server as a regular form post, write this: ko.utils.postJson($("form")[0], self.gifts);
                 };
             };
