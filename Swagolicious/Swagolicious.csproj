@@ -112,8 +112,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\FromJson.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SwagController.cs" />
+    <Compile Include="Models\SwagModel.cs" />
     <Compile Include="Models\MemberListForSwag.cs" />
     <Compile Include="Models\Swag.cs" />
     <Compile Include="Models\MemberForSwag.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="Models\dto\EventDto.cs" />
     <Compile Include="Models\dto\EventItemDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <TypeScriptCompile Include="Scripts\typings\validation\jquery.validation.d.ts" />
     <Compile Include="Service\ICacheService.cs" />
     <Compile Include="Service\InMemoryCache.cs" />
     <Compile Include="Service\MeetUpApiCall.cs" />
@@ -165,6 +168,7 @@
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery.flapper.js" />
     <Content Include="Scripts\jquery.transform.js" />
+    <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="Scripts\knockout-3.0.0.js" />
     <Content Include="Scripts\site.js" />

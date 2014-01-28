@@ -19,3 +19,12 @@ body {
 .white {
   background-color: #FFF;
 }
+.form input.error {
+  border: 1px solid #f938ab;
+  background-color: #ffddcc;
+}
+.form label.error {
+  display: block;
+  color: #f938ab;
+  font-size: 0.8em;
+}

@@ -1,4 +1,7 @@
-﻿.member img {
+﻿@error: #f938ab;
+@errorbg: #FDC;
+
+.member img {
     text-align: center;
     width: 69px;
     height: 78px;
@@ -23,4 +26,15 @@ body {
 
 .white {
     background-color: #FFF;
+}
+
+.form input.error {
+    border: 1px solid @error;
+    background-color: @errorbg;
+}
+
+.form label.error {
+    display: block;
+    color: @error;
+    font-size: 0.8em;
 }

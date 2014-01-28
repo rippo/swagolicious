@@ -9,25 +9,26 @@ module Swagolicious {
 
         private WireUp() {
             ko.applyBindings(this.viewModel);
+            $("form").validate({ submitHandler: this.viewModel.save });
         }
 
         private SwagModel = function (swag) {
-            var self = this;
-            self.swagList = ko.observableArray(swag);
+            this.swagList = ko.observableArray(swag);
 
-            self.addSwag = () => {
+            this.addSwag = () => {
                 this.swagList.push({
                     name: "",
                     quantity: 1
                 });
             };
 
-            self.removeSwag = data=> {
+            this.removeSwag = data=> {
                 this.swagList.remove(data);
             };
 
-            self.save = form=> {
-                alert("Could now transmit to server: "); //+ ko.utils.stringifyJson(this.gifts));
+            this.save = form=> {
+                ko.utils.postJson(location.href, { swag: this.swagList }, null);
+                //alert("Could now transmit to server: "); //+ ko.utils.stringifyJson(this.gifts));
                 // To actually transmit to server as a regular form post, write this: ko.utils.postJson($("form")[0], self.gifts);
             };
         };

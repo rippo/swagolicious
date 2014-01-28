@@ -4,22 +4,22 @@ var Swagolicious;
         function Swag() {
             this.SwagModel = function (swag) {
                 var _this = this;
-                var self = this;
-                self.swagList = ko.observableArray(swag);
+                this.swagList = ko.observableArray(swag);
 
-                self.addSwag = function () {
+                this.addSwag = function () {
                     _this.swagList.push({
                         name: "",
                         quantity: 1
                     });
                 };
 
-                self.removeSwag = function (data) {
+                this.removeSwag = function (data) {
                     _this.swagList.remove(data);
                 };
 
-                self.save = function (form) {
-                    alert("Could now transmit to server: "); //+ ko.utils.stringifyJson(this.gifts));
+                this.save = function (form) {
+                    ko.utils.postJson(location.href, { swag: _this.swagList }, null);
+                    //alert("Could now transmit to server: "); //+ ko.utils.stringifyJson(this.gifts));
                     // To actually transmit to server as a regular form post, write this: ko.utils.postJson($("form")[0], self.gifts);
                 };
             };
@@ -31,6 +31,7 @@ var Swagolicious;
         }
         Swag.prototype.WireUp = function () {
             ko.applyBindings(this.viewModel);
+            $("form").validate({ submitHandler: this.viewModel.save });
         };
         return Swag;
     })();
