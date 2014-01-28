@@ -3,15 +3,15 @@ var Swagolicious;
     var Site = (function () {
         function Site() {
             this.MemberViewModel = function (data) {
-                var _this = this;
-                this.Id = data.MemberId;
-                this.MemberId = ko.observable(data.MemberId);
-                this.Name = ko.observable(data.Name);
-                this.Photo = ko.observable(data.Photo);
-                this.SwagThing = ko.observable(data.SwagThing);
-                this.WonSwag = ko.observable(false);
-                this.ApplyPanelClass = ko.computed(function () {
-                    return data.WonSwag || _this.WonSwag() ? "panel-primary" : "panel-warning";
+                var self = this;
+                self.Id = data.MemberId;
+                self.MemberId = ko.observable(data.MemberId);
+                self.Name = ko.observable(data.Name);
+                self.Photo = ko.observable(data.Photo);
+                self.SwagThing = ko.observable(data.SwagThing);
+                self.WonSwag = ko.observable(false);
+                self.ApplyPanelClass = ko.computed(function () {
+                    return data.WonSwag || self.WonSwag() ? "panel-primary" : "panel-warning";
                 });
             };
             this.MasterViewModel = function (data, self) {
@@ -78,7 +78,7 @@ var Swagolicious;
                     $('#display2').val(" SMART DEVS ").change();
                     $('#myModal').modal();
                 } else {
-                    var nextWinner = ko.utils.arrayFirst(model.Members, function (item) {
+                    var nextWinner = ko.utils.arrayFirst(model.Members(), function (item) {
                         return item.Id === rawData.Winner.MemberId;
                     });
 

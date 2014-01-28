@@ -48,7 +48,7 @@ module Swagolicious {
                         $('#display2').val(" SMART DEVS ").change();
                         $('#myModal').modal();
                     } else {
-                        var nextWinner = ko.utils.arrayFirst(model.Members, (item: any)=> item.Id === rawData.Winner.MemberId);
+                        var nextWinner = ko.utils.arrayFirst(model.Members(), (item: any)=> item.Id === rawData.Winner.MemberId);
 
                         model.WinnerShown(true);
                         model.Winner(rawData.Winner.Name);
@@ -70,13 +70,14 @@ module Swagolicious {
         }
 
         private MemberViewModel = function (data) {
-            this.Id = data.MemberId;
-            this.MemberId = ko.observable(data.MemberId);
-            this.Name = ko.observable(data.Name);
-            this.Photo = ko.observable(data.Photo);
-            this.SwagThing = ko.observable(data.SwagThing);
-            this.WonSwag = ko.observable(false);
-            this.ApplyPanelClass = ko.computed(() => data.WonSwag || this.WonSwag() ? "panel-primary" : "panel-warning");
+            var self = this;
+            self.Id = data.MemberId;
+            self.MemberId = ko.observable(data.MemberId);
+            self.Name = ko.observable(data.Name);
+            self.Photo = ko.observable(data.Photo);
+            self.SwagThing = ko.observable(data.SwagThing);
+            self.WonSwag = ko.observable(false);
+            self.ApplyPanelClass = ko.computed(() => data.WonSwag || self.WonSwag() ? "panel-primary" : "panel-warning");
         };
 
         private MasterViewModel = function (data, self) {
