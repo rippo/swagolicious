@@ -8,17 +8,31 @@ module Swagolicious {
 
 
         private WireUp() {
-            ko.applyBindings(this.viewModel);
-            $("form").validate({ submitHandler: this.viewModel.save });
+            $.getJSON("/swag/allswag")
+                .then(rawData=> ko.utils.arrayMap(rawData,
+                    instanceData=> new this.SwagViewModel(instanceData)))
+                .done(mappedData=> {
+                    this.ApplyBindings(mappedData);
+                });
+
+            //ko.applyBindings(this.viewModel);
         }
 
-        private SwagModel = function (swag) {
-            this.swagList = ko.observableArray(swag);
+        private ApplyBindings(data) {
+            console.log("Applybindings");
+            var foo = new this.SwagModel(data);
+            ko.applyBindings(foo);
+            $("form").validate({ submitHandler: foo.save });
+        }
+
+
+        private SwagModel = function (data) {
+            this.swagList = ko.observableArray(data);
 
             this.addSwag = () => {
                 this.swagList.push({
-                    name: "",
-                    quantity: 1
+                    Name: "",
+                    Quantity: 1
                 });
             };
 
@@ -26,17 +40,19 @@ module Swagolicious {
                 this.swagList.remove(data);
             };
 
-            this.save = form=> {
-                ko.utils.postJson(location.href, { swag: this.swagList }, null);
+            this.save = () => {
+                ko.utils.postJson("/swag/index", { swag: this.swagList }, null);
                 //alert("Could now transmit to server: "); //+ ko.utils.stringifyJson(this.gifts));
                 // To actually transmit to server as a regular form post, write this: ko.utils.postJson($("form")[0], self.gifts);
             };
         };
 
-        private viewModel = new this.SwagModel([
-            { name: "Tall Hat", quantity: 1 },
-            { name: "Long Cloak", quantity: 2 }
-        ]);
+
+        private SwagViewModel = function (data) {
+            var self = this;
+            self.Name = data.Name;
+            self.Quantity = data.Quantity;
+        };
 
     }
 

@@ -115,7 +115,7 @@
     <Compile Include="App_Start\FromJson.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SwagController.cs" />
-    <Compile Include="Models\SwagModel.cs" />
+    <Compile Include="Models\dto\SwagModel.cs" />
     <Compile Include="Models\MemberListForSwag.cs" />
     <Compile Include="Models\Swag.cs" />
     <Compile Include="Models\MemberForSwag.cs" />
@@ -141,16 +141,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-theme.min.css">
+      <DependentUpon>bootstrap-theme.css</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.min.css">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
     <Content Include="Content\flapper.css" />
     <Content Include="Content\logo.jpeg" />
     <Content Include="Content\Site.css">
       <DependentUpon>Site.less</DependentUpon>
     </Content>
     <Content Include="Content\Site.min.css">
-      <DependentUpon>Site.less</DependentUpon>
+      <DependentUpon>Site.css</DependentUpon>
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -160,19 +164,33 @@
     <Content Include="Content\Site.less" />
     <Content Include="ApiKey.config" />
     <None Include="Properties\PublishProfiles\Release Deploy.pubxml" />
-    <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <None Include="Scripts\jquery-2.0.3.intellisense.js">
+      <DependentUpon>jquery-2.0.3.js</DependentUpon>
+    </None>
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery.flapper.callback.js" />
+    <Content Include="Scripts\bootstrap.min.js">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.flapper.callback.js">
+      <DependentUpon>jquery.flapper.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery-2.0.3.js" />
-    <Content Include="Scripts\jquery-2.0.3.min.js" />
+    <Content Include="Scripts\jquery-2.0.3.min.js">
+      <DependentUpon>jquery-2.0.3.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery.flapper.js" />
     <Content Include="Scripts\jquery.transform.js" />
     <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\knockout-3.0.0.debug.js" />
+    <Content Include="Scripts\knockout-3.0.0.debug.js">
+      <DependentUpon>knockout-3.0.0.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\knockout-3.0.0.js" />
-    <Content Include="Scripts\site.js" />
-    <Content Include="Scripts\swag.js" />
+    <Content Include="Scripts\site.js">
+      <DependentUpon>site.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\swag.js">
+      <DependentUpon>swag.ts</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

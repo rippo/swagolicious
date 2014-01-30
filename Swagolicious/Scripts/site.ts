@@ -6,7 +6,6 @@ module Swagolicious {
             this.WireUp();
         }
 
-
         private WireUp() {
             this.SetUpFlappy();
             this.LoadMembers();
@@ -97,9 +96,7 @@ module Swagolicious {
                     .then(() => { vm.Members.remove(member); });
             };
         };
-
     }
-
 }
 
 $(() => {
