@@ -10,7 +10,7 @@ module Swagolicious {
         private WireUp() {
             $.getJSON("/swag/allswag")
                 .then(rawData=> ko.utils.arrayMap(rawData,
-                    instanceData=> new this.SwagViewModel(instanceData)))
+                    instanceData=> new this.SwagModel(instanceData)))
                 .done(mappedData=> {
                     this.ApplyBindings(mappedData);
                 });
@@ -20,13 +20,13 @@ module Swagolicious {
 
         private ApplyBindings(data) {
             console.log("Applybindings");
-            var foo = new this.SwagModel(data);
+            var foo = new this.SwagViewModel(data);
             ko.applyBindings(foo);
             $("form").validate({ submitHandler: foo.save });
         }
 
 
-        private SwagModel = function (data) {
+        private SwagViewModel = function (data) {
             this.swagList = ko.observableArray(data);
 
             this.addSwag = () => {
@@ -48,7 +48,7 @@ module Swagolicious {
         };
 
 
-        private SwagViewModel = function (data) {
+        private SwagModel = function (data) {
             var self = this;
             self.Name = data.Name;
             self.Quantity = data.Quantity;

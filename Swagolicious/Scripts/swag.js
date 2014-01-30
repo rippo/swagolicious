@@ -2,7 +2,7 @@ var Swagolicious;
 (function (Swagolicious) {
     var Swag = (function () {
         function Swag() {
-            this.SwagModel = function (data) {
+            this.SwagViewModel = function (data) {
                 var _this = this;
                 this.swagList = ko.observableArray(data);
 
@@ -23,7 +23,7 @@ var Swagolicious;
                     // To actually transmit to server as a regular form post, write this: ko.utils.postJson($("form")[0], self.gifts);
                 };
             };
-            this.SwagViewModel = function (data) {
+            this.SwagModel = function (data) {
                 var self = this;
                 self.Name = data.Name;
                 self.Quantity = data.Quantity;
@@ -34,7 +34,7 @@ var Swagolicious;
             var _this = this;
             $.getJSON("/swag/allswag").then(function (rawData) {
                 return ko.utils.arrayMap(rawData, function (instanceData) {
-                    return new _this.SwagViewModel(instanceData);
+                    return new _this.SwagModel(instanceData);
                 });
             }).done(function (mappedData) {
                 _this.ApplyBindings(mappedData);
@@ -44,7 +44,7 @@ var Swagolicious;
 
         Swag.prototype.ApplyBindings = function (data) {
             console.log("Applybindings");
-            var foo = new this.SwagModel(data);
+            var foo = new this.SwagViewModel(data);
             ko.applyBindings(foo);
             $("form").validate({ submitHandler: foo.save });
         };
