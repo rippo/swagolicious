@@ -24,18 +24,16 @@ module Swagolicious {
         }
 
         private LoadMembers() {
-            $.getJSON("/home/memberlist")
-                .then(rawData=> ko.utils.arrayMap(rawData, instanceData=> new this.MemberViewModel(instanceData)))
-                .done(mappedData=> {
-                    this.ApplyBindings(mappedData);
-                });
+            var instance = new this.ViewModel();
+            ko.applyBindings(instance);
+
+            $.when(instance.get()).then(data=> {
+                instance.swagList(ko.utils.arrayMap(data, item=> {
+                    return new this.MemberModel(item);
+                }));
+            });
         }
 
-        private ApplyBindings(data) {
-            console.log("Applybindings");
-            var self = this;
-            ko.applyBindings(new self.MasterViewModel(data, self));
-        }
 
         private LoadNextWinner(model) {
             $('#display2').val("            ").change();
@@ -47,7 +45,7 @@ module Swagolicious {
                         $('#display2').val(" SMART DEVS ").change();
                         $('#myModal').modal();
                     } else {
-                        var nextWinner = ko.utils.arrayFirst(model.Members(), (item: any)=> item.Id === rawData.Winner.MemberId);
+                        var nextWinner = ko.utils.arrayFirst(model.Members(), (item: any) => item.Id === rawData.Winner.MemberId);
 
                         model.WinnerShown(true);
                         model.Winner(rawData.Winner.Name);
@@ -68,7 +66,7 @@ module Swagolicious {
                 });
         }
 
-        private MemberViewModel = function (data) {
+        private MemberModel = function (data) {
             var self = this;
             self.Id = data.MemberId;
             self.MemberId = ko.observable(data.MemberId);
@@ -79,22 +77,23 @@ module Swagolicious {
             self.ApplyPanelClass = ko.computed(() => data.WonSwag || self.WonSwag() ? "panel-primary" : "panel-warning");
         };
 
-        private MasterViewModel = function (data, self) {
+        private ViewModel = function () {
             var vm = this;
-            vm.Members = ko.observableArray(data);
+            vm.Members = ko.observableArray();
             vm.Winner = ko.observable();
             vm.WinnerSwagThing = ko.observable();
             vm.WinnerPhoto = ko.observable();
             vm.WinnerShown = ko.observable(false);
 
-            vm.GetNextWinner = () => {
-                self.LoadNextWinner(this);
-            };
+            vm.GetNextWinner = () => vm.LoadNextWinner(this);
 
             vm.RemoveMember = member=> {
                 $.get("/home/removememberfromgettingswag/" + member.Id)
                     .then(() => { vm.Members.remove(member); });
             };
+
+            vm.get = () => $.getJSON("/swag/allswag");
+
         };
     }
 }

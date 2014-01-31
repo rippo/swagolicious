@@ -2,7 +2,7 @@ var Swagolicious;
 (function (Swagolicious) {
     var Site = (function () {
         function Site() {
-            this.MemberViewModel = function (data) {
+            this.MemberModel = function (data) {
                 var self = this;
                 self.Id = data.MemberId;
                 self.MemberId = ko.observable(data.MemberId);
@@ -14,23 +14,27 @@ var Swagolicious;
                     return data.WonSwag || self.WonSwag() ? "panel-primary" : "panel-warning";
                 });
             };
-            this.MasterViewModel = function (data, self) {
+            this.ViewModel = function () {
                 var _this = this;
                 var vm = this;
-                vm.Members = ko.observableArray(data);
+                vm.Members = ko.observableArray();
                 vm.Winner = ko.observable();
                 vm.WinnerSwagThing = ko.observable();
                 vm.WinnerPhoto = ko.observable();
                 vm.WinnerShown = ko.observable(false);
 
                 vm.GetNextWinner = function () {
-                    self.LoadNextWinner(_this);
+                    return vm.LoadNextWinner(_this);
                 };
 
                 vm.RemoveMember = function (member) {
                     $.get("/home/removememberfromgettingswag/" + member.Id).then(function () {
                         vm.Members.remove(member);
                     });
+                };
+
+                vm.get = function () {
+                    return $.getJSON("/swag/allswag");
                 };
             };
             this.WireUp();
@@ -54,19 +58,14 @@ var Swagolicious;
 
         Site.prototype.LoadMembers = function () {
             var _this = this;
-            $.getJSON("/home/memberlist").then(function (rawData) {
-                return ko.utils.arrayMap(rawData, function (instanceData) {
-                    return new _this.MemberViewModel(instanceData);
-                });
-            }).done(function (mappedData) {
-                _this.ApplyBindings(mappedData);
-            });
-        };
+            var instance = new this.ViewModel();
+            ko.applyBindings(instance);
 
-        Site.prototype.ApplyBindings = function (data) {
-            console.log("Applybindings");
-            var self = this;
-            ko.applyBindings(new self.MasterViewModel(data, self));
+            $.when(instance.get()).then(function (data) {
+                instance.swagList(ko.utils.arrayMap(data, function (item) {
+                    return new _this.MemberModel(item);
+                }));
+            });
         };
 
         Site.prototype.LoadNextWinner = function (model) {
