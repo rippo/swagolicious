@@ -2,15 +2,20 @@ var Swagolicious;
 (function (Swagolicious) {
     var Swag = (function () {
         function Swag() {
-            this.SwagViewModel = function (data) {
+            this.SwagModel = function (data) {
+                this.Name = data.Name;
+                this.Quantity = data.Quantity;
+            };
+            this.ViewModel = function () {
                 var _this = this;
-                this.swagList = ko.observableArray(data);
+                this.swagList = ko.observableArray();
+
+                this.get = function () {
+                    return $.getJSON("/swag/allswag");
+                };
 
                 this.addSwag = function () {
-                    _this.swagList.push({
-                        Name: "",
-                        Quantity: 1
-                    });
+                    _this.swagList.push({ Name: "", Quantity: 1 });
                 };
 
                 this.removeSwag = function (data) {
@@ -19,34 +24,24 @@ var Swagolicious;
 
                 this.save = function () {
                     ko.utils.postJson("/swag/index", { swag: _this.swagList }, null);
-                    //alert("Could now transmit to server: "); //+ ko.utils.stringifyJson(this.gifts));
-                    // To actually transmit to server as a regular form post, write this: ko.utils.postJson($("form")[0], self.gifts);
                 };
-            };
-            this.SwagModel = function (data) {
-                var self = this;
-                self.Name = data.Name;
-                self.Quantity = data.Quantity;
             };
             this.WireUp();
         }
         Swag.prototype.WireUp = function () {
             var _this = this;
-            $.getJSON("/swag/allswag").then(function (rawData) {
-                return ko.utils.arrayMap(rawData, function (instanceData) {
-                    return new _this.SwagModel(instanceData);
-                });
-            }).done(function (mappedData) {
-                _this.ApplyBindings(mappedData);
-            });
-            //ko.applyBindings(this.viewModel);
-        };
+            var instance = new this.ViewModel();
+            ko.applyBindings(instance);
 
-        Swag.prototype.ApplyBindings = function (data) {
-            console.log("Applybindings");
-            var foo = new this.SwagViewModel(data);
-            ko.applyBindings(foo);
-            $("form").validate({ submitHandler: foo.save });
+            //Idea came from http://notebookheavy.com/2012/09/05/knockout-view-models-jquery-deferreds/
+            //  JQuery calls the get method on the view model and waits with a promise
+            //    and then binds the data to the swag list. NEAT
+            $.when(instance.get()).then(function (data) {
+                instance.swagList(ko.utils.arrayMap(data, function (item) {
+                    $("form").validate({ submitHandler: instance.save });
+                    return new _this.SwagModel(item);
+                }));
+            });
         };
         return Swag;
     })();
