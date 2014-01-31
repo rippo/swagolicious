@@ -24,18 +24,19 @@ module Swagolicious {
         }
 
         private LoadMembers() {
-            var instance = new this.ViewModel();
+            var self = this;
+            var instance = new this.ViewModel(self);
             ko.applyBindings(instance);
 
             $.when(instance.get()).then(data=> {
-                instance.swagList(ko.utils.arrayMap(data, item=> {
-                    return new this.MemberModel(item);
+                instance.Members(ko.utils.arrayMap(data, item=> {
+                    return new self.MemberModel(item);
                 }));
             });
         }
 
 
-        private LoadNextWinner(model) {
+        private LoadNextWinner(vm) {
             $('#display2').val("            ").change();
 
             $.getJSON("/home/nextwinner")
@@ -45,12 +46,12 @@ module Swagolicious {
                         $('#display2').val(" SMART DEVS ").change();
                         $('#myModal').modal();
                     } else {
-                        var nextWinner = ko.utils.arrayFirst(model.Members(), (item: any) => item.Id === rawData.Winner.MemberId);
+                        var nextWinner = ko.utils.arrayFirst(vm.Members(), (item: any) => item.Id === rawData.Winner.MemberId);
 
-                        model.WinnerShown(true);
-                        model.Winner(rawData.Winner.Name);
-                        model.WinnerSwagThing(rawData.WonSwag.Thing);
-                        model.WinnerPhoto(rawData.Winner.Photo);
+                        vm.WinnerShown(true);
+                        vm.Winner(rawData.Winner.Name);
+                        vm.WinnerSwagThing(rawData.WonSwag.Thing);
+                        vm.WinnerPhoto(rawData.Winner.Photo);
 
                         $('#display1').val(rawData.Winner.PaddedName).change();
                         $('#display2').val(rawData.WonSwag.PaddedName).change();
@@ -77,7 +78,7 @@ module Swagolicious {
             self.ApplyPanelClass = ko.computed(() => data.WonSwag || self.WonSwag() ? "panel-primary" : "panel-warning");
         };
 
-        private ViewModel = function () {
+        private ViewModel = function (foo) {
             var vm = this;
             vm.Members = ko.observableArray();
             vm.Winner = ko.observable();
@@ -85,19 +86,24 @@ module Swagolicious {
             vm.WinnerPhoto = ko.observable();
             vm.WinnerShown = ko.observable(false);
 
-            vm.GetNextWinner = () => vm.LoadNextWinner(this);
-
             vm.RemoveMember = member=> {
                 $.get("/home/removememberfromgettingswag/" + member.Id)
                     .then(() => { vm.Members.remove(member); });
             };
 
-            vm.get = () => $.getJSON("/swag/allswag");
+            vm.get = () => $.getJSON("/home/memberlist");
 
+            vm.GetNextWinner = () => {
+                foo.LoadNextWinner(vm);
+            };
         };
+
     }
 }
 
 $(() => {
     var site = new Swagolicious.Site();
 });
+
+
+

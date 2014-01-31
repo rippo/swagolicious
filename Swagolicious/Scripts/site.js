@@ -1,4 +1,4 @@
-var Swagolicious;
+﻿var Swagolicious;
 (function (Swagolicious) {
     var Site = (function () {
         function Site() {
@@ -14,18 +14,13 @@ var Swagolicious;
                     return data.WonSwag || self.WonSwag() ? "panel-primary" : "panel-warning";
                 });
             };
-            this.ViewModel = function () {
-                var _this = this;
+            this.ViewModel = function (foo) {
                 var vm = this;
                 vm.Members = ko.observableArray();
                 vm.Winner = ko.observable();
                 vm.WinnerSwagThing = ko.observable();
                 vm.WinnerPhoto = ko.observable();
                 vm.WinnerShown = ko.observable(false);
-
-                vm.GetNextWinner = function () {
-                    return vm.LoadNextWinner(_this);
-                };
 
                 vm.RemoveMember = function (member) {
                     $.get("/home/removememberfromgettingswag/" + member.Id).then(function () {
@@ -34,7 +29,11 @@ var Swagolicious;
                 };
 
                 vm.get = function () {
-                    return $.getJSON("/swag/allswag");
+                    return $.getJSON("/home/memberlist");
+                };
+
+                vm.GetNextWinner = function () {
+                    foo.LoadNextWinner(vm);
                 };
             };
             this.WireUp();
@@ -57,18 +56,18 @@ var Swagolicious;
         };
 
         Site.prototype.LoadMembers = function () {
-            var _this = this;
-            var instance = new this.ViewModel();
+            var self = this;
+            var instance = new this.ViewModel(self);
             ko.applyBindings(instance);
 
             $.when(instance.get()).then(function (data) {
-                instance.swagList(ko.utils.arrayMap(data, function (item) {
-                    return new _this.MemberModel(item);
+                instance.Members(ko.utils.arrayMap(data, function (item) {
+                    return new self.MemberModel(item);
                 }));
             });
         };
 
-        Site.prototype.LoadNextWinner = function (model) {
+        Site.prototype.LoadNextWinner = function (vm) {
             $('#display2').val("            ").change();
 
             $.getJSON("/home/nextwinner").then(function (rawData) {
@@ -77,14 +76,14 @@ var Swagolicious;
                     $('#display2').val(" SMART DEVS ").change();
                     $('#myModal').modal();
                 } else {
-                    var nextWinner = ko.utils.arrayFirst(model.Members(), function (item) {
+                    var nextWinner = ko.utils.arrayFirst(vm.Members(), function (item) {
                         return item.Id === rawData.Winner.MemberId;
                     });
 
-                    model.WinnerShown(true);
-                    model.Winner(rawData.Winner.Name);
-                    model.WinnerSwagThing(rawData.WonSwag.Thing);
-                    model.WinnerPhoto(rawData.Winner.Photo);
+                    vm.WinnerShown(true);
+                    vm.Winner(rawData.Winner.Name);
+                    vm.WinnerSwagThing(rawData.WonSwag.Thing);
+                    vm.WinnerPhoto(rawData.Winner.Photo);
 
                     $('#display1').val(rawData.Winner.PaddedName).change();
                     $('#display2').val(rawData.WonSwag.PaddedName).change();
