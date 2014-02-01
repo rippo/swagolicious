@@ -1,4 +1,4 @@
-﻿var Swagolicious;
+var Swagolicious;
 (function (Swagolicious) {
     var Site = (function () {
         function Site() {

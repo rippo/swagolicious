@@ -28,6 +28,8 @@ namespace Swagolicious.Service
                     .Where(w => !Settings.AttendeesExcludeList.Contains(w.Member.Name))
                     .ToList();
 
+                MemberListForSwag.Initialise();
+
                 //lets fill the attendee and swag lists
                 foreach (var result in results)
                 {

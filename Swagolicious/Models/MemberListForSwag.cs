@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Swagolicious.Controllers;
 using Swagolicious.Service;
 
 namespace Swagolicious.Models
@@ -7,6 +6,11 @@ namespace Swagolicious.Models
     public static class MemberListForSwag
     {
         static MemberListForSwag()
+        {
+            Initialise();
+        }
+
+        public static void Initialise()
         {
             MemberList = new List<MemberForSwag>();
             Swag = new List<Swag>();
