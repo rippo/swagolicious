@@ -1,4 +1,4 @@
-var Swagolicious;
+﻿var Swagolicious;
 (function (Swagolicious) {
     var Site = (function () {
         function Site() {
@@ -14,7 +14,7 @@ var Swagolicious;
                     return data.WonSwag || self.WonSwag() ? "panel-primary" : "panel-warning";
                 });
             };
-            this.ViewModel = function (foo) {
+            this.ViewModel = function () {
                 var vm = this;
                 vm.Members = ko.observableArray();
                 vm.Winner = ko.observable();
@@ -33,7 +33,7 @@ var Swagolicious;
                 };
 
                 vm.GetNextWinner = function () {
-                    foo.LoadNextWinner(vm);
+                    Site.prototype.LoadNextWinner(vm);
                 };
             };
             this.WireUp();
@@ -57,7 +57,7 @@ var Swagolicious;
 
         Site.prototype.LoadMembers = function () {
             var self = this;
-            var instance = new this.ViewModel(self);
+            var instance = new this.ViewModel();
             ko.applyBindings(instance);
 
             $.when(instance.get()).then(function (data) {
@@ -99,6 +99,10 @@ var Swagolicious;
                 ;
                 ;
             });
+        };
+
+        Site.prototype.Test = function () {
+            console.log("test");
         };
         return Site;
     })();

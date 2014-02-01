@@ -25,7 +25,7 @@ module Swagolicious {
 
         private LoadMembers() {
             var self = this;
-            var instance = new this.ViewModel(self);
+            var instance = new this.ViewModel();
             ko.applyBindings(instance);
 
             $.when(instance.get()).then(data=> {
@@ -78,7 +78,11 @@ module Swagolicious {
             self.ApplyPanelClass = ko.computed(() => data.WonSwag || self.WonSwag() ? "panel-primary" : "panel-warning");
         };
 
-        private ViewModel = function (foo) {
+        private Test() {
+            console.log("test");
+        }
+
+        private ViewModel = function () {
             var vm = this;
             vm.Members = ko.observableArray();
             vm.Winner = ko.observable();
@@ -94,7 +98,7 @@ module Swagolicious {
             vm.get = () => $.getJSON("/home/memberlist");
 
             vm.GetNextWinner = () => {
-                foo.LoadNextWinner(vm);
+                Site.prototype.LoadNextWinner(vm);
             };
         };
 
