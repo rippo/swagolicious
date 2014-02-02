@@ -1,4 +1,4 @@
-﻿var Swagolicious;
+var Swagolicious;
 (function (Swagolicious) {
     var Site = (function () {
         function Site() {
@@ -33,6 +33,7 @@
                 };
 
                 vm.GetNextWinner = function () {
+                    //not happy with this... need to find better way
                     Site.prototype.LoadNextWinner(vm);
                 };
             };
@@ -99,10 +100,6 @@
                 ;
                 ;
             });
-        };
-
-        Site.prototype.Test = function () {
-            console.log("test");
         };
         return Site;
     })();

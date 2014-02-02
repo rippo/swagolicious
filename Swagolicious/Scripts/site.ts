@@ -78,10 +78,6 @@ module Swagolicious {
             self.ApplyPanelClass = ko.computed(() => data.WonSwag || self.WonSwag() ? "panel-primary" : "panel-warning");
         };
 
-        private Test() {
-            console.log("test");
-        }
-
         private ViewModel = function () {
             var vm = this;
             vm.Members = ko.observableArray();
@@ -98,6 +94,7 @@ module Swagolicious {
             vm.get = () => $.getJSON("/home/memberlist");
 
             vm.GetNextWinner = () => {
+                //not happy with this... need to find better way
                 Site.prototype.LoadNextWinner(vm);
             };
         };
