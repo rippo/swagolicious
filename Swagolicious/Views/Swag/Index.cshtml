@@ -1,4 +1,4 @@
-﻿<div class="row white">
+﻿<div class="row white paddding-btm">
     <div class="col-md-12">
 
         <h1>Swag</h1>
@@ -14,15 +14,15 @@
                 </thead>
                 <tbody data-bind='foreach: swagList'>
                     <tr>
-                        <td><input class='required form-control' data-bind='value: Name, uniqueName: true' /></td>
-                        <td><input class='required number form-control' data-bind='value: Quantity, uniqueName: true' /></td>
-                        <td><a href='#' data-bind='click: $root.removeSwag'>Delete</a></td>
+                        <td class="col-xs-8"><input class='required form-control' data-bind='value: Name, uniqueName: true' /></td>
+                        <td class="col-xs-2"><input class='required number form-control' data-bind='value: Quantity, uniqueName: true' /></td>
+                        <td class="col-xs-2"><a class="btn btn-default" role="button" href='#' data-bind='click: $root.removeSwag'>Delete</a></td>
                     </tr>
                 </tbody>
             </table>
 
-            <button class="btn btn-primary" data-bind='click: addSwag'>Add Swag</button>
-            <button data-bind='enable: swagList().length > 0' type='submit'>Submit</button>
+            <button class="btn" data-bind='click: addSwag'>Add Swag</button>
+            <button class="btn btn-primary" data-bind='enable: swagList().length > 0' type='submit'>Submit</button>
         </form>
     </div>
 </div>
