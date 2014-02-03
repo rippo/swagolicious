@@ -128,6 +128,7 @@
     <Compile Include="Models\dto\EventItemDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <TypeScriptCompile Include="Scripts\typings\validation\jquery.validation.d.ts" />
+    <Compile Include="Service\FileService.cs" />
     <Compile Include="Service\ICacheService.cs" />
     <Compile Include="Service\InMemoryCache.cs" />
     <Compile Include="Service\MeetUpApiCall.cs" />
@@ -163,6 +164,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Site.less" />
     <Content Include="ApiKey.config" />
+    <Content Include="App_Data\swag.json" />
     <None Include="Properties\PublishProfiles\Release Deploy.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js">
       <DependentUpon>jquery-2.0.3.js</DependentUpon>
@@ -207,9 +209,7 @@
     <Content Include="Views\Home\Partials\Winner.cshtml" />
     <Content Include="Views\Swag\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

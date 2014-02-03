@@ -18,6 +18,8 @@ namespace Swagolicious.Controllers
         [HttpPost]
         public RedirectToRouteResult Index([FromJson] IEnumerable<SwagItemDto> swag)
         {
+            new FileService(Server.MapPath("~/App_Data")).SaveSwagToDisc(swag);
+
             ApplicationData.Swag.Clear();
 
             foreach (var dto in swag)
