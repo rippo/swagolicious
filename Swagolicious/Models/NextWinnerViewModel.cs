@@ -1,10 +1,8 @@
-﻿using Swagolicious.Controllers;
-
-namespace Swagolicious.Models
+﻿namespace Swagolicious.Models
 {
     public class NextWinnerViewModel
     {
-        public MemberForSwag Winner { get; set; }
+        public Attendee Winner { get; set; }
         public Swag WonSwag { get; set; }
     }
 }

@@ -115,10 +115,10 @@
     <Compile Include="App_Start\FromJson.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SwagController.cs" />
-    <Compile Include="Models\dto\SwagModel.cs" />
-    <Compile Include="Models\MemberListForSwag.cs" />
+    <Compile Include="Models\dto\SwagItemDto.cs" />
+    <Compile Include="Models\ApplicationData.cs" />
     <Compile Include="Models\Swag.cs" />
-    <Compile Include="Models\MemberForSwag.cs" />
+    <Compile Include="Models\Attendee.cs" />
     <Compile Include="Models\NextWinnerViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

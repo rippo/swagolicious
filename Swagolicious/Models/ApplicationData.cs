@@ -3,25 +3,26 @@ using Swagolicious.Service;
 
 namespace Swagolicious.Models
 {
-    public static class MemberListForSwag
+    public static class ApplicationData
     {
-        static MemberListForSwag()
+        static ApplicationData()
         {
             Initialise();
         }
 
         public static void Initialise()
         {
-            MemberList = new List<MemberForSwag>();
+            Attendees = new List<Attendee>();
             Swag = new List<Swag>();
         }
 
-        public static List<MemberForSwag> MemberList { get; set; }
+        public static List<Attendee> Attendees { get; set; }
+
         public static List<Swag> Swag { get; set; }
 
         public static void ResetWinnersAndReshuffle()
         {
-            foreach (var item in MemberList)
+            foreach (var item in Attendees)
             {
                 item.WonSwag = false;
                 item.Excluded = false;
@@ -31,7 +32,7 @@ namespace Swagolicious.Models
             {
                 swag.Claimed = false;
             }
-            MemberList.Shuffle();
+            Attendees.Shuffle();
             Swag.Shuffle();
         }
     }

@@ -18,22 +18,22 @@ namespace Swagolicious.Controllers
         [HttpPost]
         public RedirectToRouteResult Index([FromJson] IEnumerable<SwagItemDto> swag)
         {
-            MemberListForSwag.Swag.Clear();
+            ApplicationData.Swag.Clear();
 
             foreach (var dto in swag)
             {
                 for (var i = 0; i < dto.Quantity; i++)
                 {
-                    MemberListForSwag.Swag.Add(new Swag { Claimed = false, Thing = dto.Name });
+                    ApplicationData.Swag.Add(new Swag { Claimed = false, Thing = dto.Name });
                 }
             }
-            MemberListForSwag.Swag.Shuffle();
+            ApplicationData.Swag.Shuffle();
             return RedirectToAction("Index");
         }
 
         public JsonResult AllSwag()
         {
-            var list = from s in MemberListForSwag.Swag
+            var list = from s in ApplicationData.Swag
                        group s by s.Thing into g
                        select new SwagItemDto
                        {

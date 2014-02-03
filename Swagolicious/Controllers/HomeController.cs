@@ -22,7 +22,7 @@ namespace Swagolicious.Controllers
 
         public RedirectToRouteResult Reset()
         {
-            MemberListForSwag.ResetWinnersAndReshuffle();
+            ApplicationData.ResetWinnersAndReshuffle();
             return RedirectToAction("Index");
         }
 
@@ -34,13 +34,13 @@ namespace Swagolicious.Controllers
 
         public JsonResult MemberList()
         {
-            var list = MemberListForSwag.MemberList.Where(w => !w.Excluded).OrderBy(w => w.Name);
+            var list = ApplicationData.Attendees.Where(w => !w.Excluded).OrderBy(w => w.Name);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public EmptyResult RemoveMemberFromGettingSwag(long id)
         {
-            var excludee = MemberListForSwag.MemberList.FirstOrDefault(w => w.MemberId == id);
+            var excludee = ApplicationData.Attendees.FirstOrDefault(w => w.MemberId == id);
             if (excludee != null)
                 excludee.Excluded = true;
             return new EmptyResult();
@@ -48,11 +48,11 @@ namespace Swagolicious.Controllers
 
         public JsonResult NextWinner()
         {
-            var winner = MemberListForSwag.MemberList.FirstOrDefault(w => !w.WonSwag && !w.Excluded);
+            var winner = ApplicationData.Attendees.FirstOrDefault(w => !w.WonSwag && !w.Excluded);
             if (winner == null)
                 return Json(new { MemberId = 0 }, JsonRequestBehavior.AllowGet);
 
-            var swag = MemberListForSwag.Swag.FirstOrDefault(w => !w.Claimed);
+            var swag = ApplicationData.Swag.FirstOrDefault(w => !w.Claimed);
             if (swag == null)
                 swag = new Swag { Thing = "You choose" };
 

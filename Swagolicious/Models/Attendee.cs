@@ -2,7 +2,7 @@ using Swagolicious.Service;
 
 namespace Swagolicious.Models
 {
-    public class MemberForSwag
+    public class Attendee
     {
         public string Name { get; set; }
         public string Photo { get; set; }
