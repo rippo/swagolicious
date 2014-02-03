@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web.Hosting;
 using RestSharp;
 using Swagolicious.Models;
 
@@ -37,14 +38,26 @@ namespace Swagolicious.Service
 
         private void BuildSwagModel()
         {
-            //swag
-            ApplicationData.Swag.Add(new Swag { Thing = "A very long name here", Claimed = false });
-            ApplicationData.Swag.Add(new Swag { Thing = "A very long name here", Claimed = false });
-            ApplicationData.Swag.Add(new Swag { Thing = "A very long name here", Claimed = false });
-            ApplicationData.Swag.Add(new Swag { Thing = "A very long name here", Claimed = false });
-            ApplicationData.Swag.Add(new Swag { Thing = "TShirt1", Claimed = false });
-            ApplicationData.Swag.Add(new Swag { Thing = "TShirt2", Claimed = false });
-            ApplicationData.Swag.Add(new Swag { Thing = "TShirt3", Claimed = false });
+            var result = new FileService().LoadSwagFromDisc();
+
+            if (result.Count == 0)
+            {
+                //Default swag
+                ApplicationData.Swag.Add(new Swag {Thing = "TShirt", Claimed = false});
+                ApplicationData.Swag.Add(new Swag {Thing = "TShirt", Claimed = false});
+                ApplicationData.Swag.Add(new Swag {Thing = "TShirt", Claimed = false});
+            }
+            else
+            {
+                foreach (var dto in result)
+                {
+                    for (var i = 0; i < dto.Quantity; i++)
+                    {
+                        ApplicationData.Swag.Add(new Swag { Claimed = false, Thing = dto.Name });
+                    }
+                }
+            }
+
             ApplicationData.Swag.Shuffle();
         }
 

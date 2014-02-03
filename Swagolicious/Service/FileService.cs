@@ -1,8 +1,7 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Web.Hosting;
 using Newtonsoft.Json;
-using Swagolicious.Models;
 using Swagolicious.Models.dto;
 
 namespace Swagolicious.Service
@@ -12,9 +11,9 @@ namespace Swagolicious.Service
         private readonly string savePath;
         private const string SwagFileName = "swag.json";
 
-        public FileService(string savePath)
+        public FileService()
         {
-            this.savePath = savePath;
+            this.savePath = HostingEnvironment.MapPath("~/app_data");
         }
 
         public void SaveSwagToDisc(IEnumerable<SwagItemDto> swag)
@@ -31,5 +30,14 @@ namespace Swagolicious.Service
             }
         }
 
+        public List<SwagItemDto> LoadSwagFromDisc()
+        {
+            if (!File.Exists(Path.Combine(savePath, SwagFileName)))
+                return new List<SwagItemDto>();
+
+            var json = File.ReadAllText(Path.Combine(savePath, SwagFileName));
+            var result = JsonConvert.DeserializeObject<List<SwagItemDto>>(json);
+            return result;
+        }
     }
 }
