@@ -1,15 +1,6 @@
-﻿<div class="row white">
+﻿<div class="row white paddding-btm">
     <div class="col-md-12">
-
-        <div data-bind="text: description"></div>
-
-        <ul data-bind="foreach: {data : swagList}">
-            <li>
-                <span data-bind="text: $index"></span>
-                <span data-bind="text: Name"></span>
-                <span data-bind="text: Quantity"></span>
-            </li>
-        </ul>
+        <button data-bind="click : clickMe">Click me</button>
 
     </div>
 </div>
@@ -21,38 +12,6 @@
     <script src="~/Scripts/jquery-2.0.3.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/knockout-3.0.0.debug.js"></script>
+    <script src="~/Scripts/test.js"></script>
 
-    <script>
-        var swagModel = function(data) {
-            var self = this;
-            self.Name = data.Name;
-            self.Quantity = data.Quantity;
-        };
-
-        var viewModel = function() {
-
-            var self = this;
-            self.description = ko.observable();
-            self.swagList = ko.observableArray();
-
-            self.get = function() {
-                return $.getJSON("/swag/allswag");
-            };
-
-        };
-
-        $(function() {
-
-            var instance = new viewModel();
-            ko.applyBindings(instance);
-
-            $.when(instance.get()).then(function(data) {
-                instance.description("rippo");
-                instance.swagList(ko.utils.arrayMap(data, function (item) {
-                    return new swagModel(item);
-                }));
-            });
-
-        });
-    </script>
 }

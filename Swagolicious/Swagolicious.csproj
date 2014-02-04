@@ -127,6 +127,7 @@
     <Compile Include="Models\dto\EventDto.cs" />
     <Compile Include="Models\dto\EventItemDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <TypeScriptCompile Include="Scripts\test.ts" />
     <TypeScriptCompile Include="Scripts\typings\validation\jquery.validation.d.ts" />
     <Compile Include="Service\FileService.cs" />
     <Compile Include="Service\ICacheService.cs" />
@@ -192,6 +193,9 @@
     </Content>
     <Content Include="Scripts\swag.js">
       <DependentUpon>swag.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\test.js">
+      <DependentUpon>test.ts</DependentUpon>
     </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
