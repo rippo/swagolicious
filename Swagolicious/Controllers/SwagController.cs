@@ -35,6 +35,7 @@ namespace Swagolicious.Controllers
         public JsonResult AllSwag()
         {
             var list = from s in ApplicationData.Swag
+                       orderby s.Thing
                        group s by s.Thing into g
                        select new SwagItemDto
                        {
