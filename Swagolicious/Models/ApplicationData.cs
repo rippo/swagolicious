@@ -15,11 +15,8 @@ namespace Swagolicious.Models
             Attendees = new List<Attendee>();
             Swag = new List<Swag>();
         }
-
         public static List<Attendee> Attendees { get; set; }
-
         public static List<Swag> Swag { get; set; }
-
         public static void ResetWinnersAndReshuffle()
         {
             foreach (var item in Attendees)

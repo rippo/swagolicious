@@ -17,19 +17,24 @@ namespace Swagolicious.Service
                 //Get upcoming events
                 var request = new RestRequest { Resource = Settings.MeetupEventsUrl };
                 request.AddUrlSegment("groupname", Settings.MeetupGroupName);
+
                 var events = api.Execute<EventDto>(request);
+                var nextEvent = events.Results.First();
 
                 //Get RSVP list from first event
                 request = new RestRequest { Resource = Settings.MeetupRsvpUrl };
-                request.AddUrlSegment("eventid", events.Results.First().Id);
+                request.AddUrlSegment("eventid", nextEvent.Id);
                 var rsvpList = api.Execute<RsvpDto>(request);
+
+                //Do we have any guests?
+                var guestCount = nextEvent.YesRsvpCount - rsvpList.Results.Count;
 
                 //exclude coordinators
                 var results = rsvpList.Results
                     .Where(w => !Settings.AttendeesExcludeList.Contains(w.Member.Name))
                     .ToList();
 
-                BuildMemberModel(results);
+                BuildMemberModel(results, guestCount);
                 BuildSwagModel();
 
                 return results;
@@ -43,9 +48,9 @@ namespace Swagolicious.Service
             if (result.Count == 0)
             {
                 //Default swag
-                ApplicationData.Swag.Add(new Swag {Thing = "TShirt", Claimed = false});
-                ApplicationData.Swag.Add(new Swag {Thing = "TShirt", Claimed = false});
-                ApplicationData.Swag.Add(new Swag {Thing = "TShirt", Claimed = false});
+                ApplicationData.Swag.Add(new Swag { Thing = "TShirt", Claimed = false });
+                ApplicationData.Swag.Add(new Swag { Thing = "TShirt", Claimed = false });
+                ApplicationData.Swag.Add(new Swag { Thing = "TShirt", Claimed = false });
             }
             else
             {
@@ -61,14 +66,13 @@ namespace Swagolicious.Service
             ApplicationData.Swag.Shuffle();
         }
 
-        private void BuildMemberModel(IEnumerable<Result> results)
+        private void BuildMemberModel(IEnumerable<Result> results, int guestCount)
         {
             ApplicationData.Initialise();
 
             //lets fill the attendee and swag lists
             foreach (var result in results)
             {
-
                 ApplicationData.Attendees.Add(
                     new Attendee
                     {
@@ -80,6 +84,21 @@ namespace Swagolicious.Service
                         MemberId = result.Member.MemberId
                     });
             }
+
+            for (var i = 1; i <= guestCount; i++)
+            {
+                ApplicationData.Attendees.Add(
+                    new Attendee
+                    {
+                        Name = "Guest " + i,
+                        Photo = "http://img2.meetupstatic.com/2982428616572973604/img/noPhoto_80.gif",
+                        WonSwag = false,
+                        SwagThing = "?",
+                        MemberId = -i
+                    });
+
+            }
+
             ApplicationData.Attendees.Shuffle();
         }
 
