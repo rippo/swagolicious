@@ -1,18 +1,30 @@
 [
   {
-    "Name": "TShirt",
-    "Quantity": 4
+    "Name": "Apress Ebook",
+    "Quantity": 2
+  },
+  {
+    "Name": "Book",
+    "Quantity": 1
+  },
+  {
+    "Name": "Pluralsight Subscription",
+    "Quantity": 2
+  },
+  {
+    "Name": "Sql Source Control",
+    "Quantity": 1
   },
   {
     "Name": "Telerik Dev Craft",
     "Quantity": 1
   },
   {
-    "Name": "Pluralsight Subscription",
-    "Quantity": 1
+    "Name": "TShirt",
+    "Quantity": 4
   },
   {
-    "Name": "Book",
+    "Name": "Kendo UI Mobile",
     "Quantity": 1
   }
 ]
