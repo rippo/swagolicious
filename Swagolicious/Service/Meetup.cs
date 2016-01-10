@@ -78,7 +78,7 @@ namespace Swagolicious.Service
                     {
                         Name = result.Member.Name.FirstNameAndSurnameInitial(),
                         Photo = result.MemberPhoto != null ?
-                            result.MemberPhoto.PhotoLink : "http://img2.meetupstatic.com/2982428616572973604/img/noPhoto_80.gif",
+                            result.MemberPhoto.PhotoLink : "http://img2.meetupstatic.com/img/2982428616572973604/noPhoto_80.gif",
                         WonSwag = false,
                         SwagThing = "?",
                         MemberId = result.Member.MemberId
@@ -91,7 +91,7 @@ namespace Swagolicious.Service
                     new Attendee
                     {
                         Name = "Guest " + i,
-                        Photo = "http://img2.meetupstatic.com/2982428616572973604/img/noPhoto_80.gif",
+                        Photo = "http://img2.meetupstatic.com/img/2982428616572973604/noPhoto_80.gif",
                         WonSwag = false,
                         SwagThing = "?",
                         MemberId = -i

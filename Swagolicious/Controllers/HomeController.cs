@@ -32,6 +32,7 @@ namespace Swagolicious.Controllers
             return RedirectToAction("Index");
         }
 
+        [AllowCrossSiteJson]
         public JsonResult MemberList()
         {
             var list = ApplicationData.Attendees.Where(w => !w.Excluded).OrderBy(w => w.Name);
